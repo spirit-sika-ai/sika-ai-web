@@ -1,17 +1,17 @@
 <template>
-  <ElContainer style="height: 95vh">
+  <el-container style="height: 95vh">
     <Transition>
-      <ElAside
+      <el-aside
         v-if="sideBarStore.open"
         width="200px"
       >
         ElAside
-      </ElAside>
+      </el-aside>
     </Transition>
-    <ElMain>
+    <el-main>
       <RouterView/>
-    </ElMain>
-  </ElContainer>
+    </el-main>
+  </el-container>
 </template>
 
 <script setup lang="ts">

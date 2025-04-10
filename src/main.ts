@@ -1,6 +1,7 @@
 import './assets/main.css'
 // ep 暗黑主题样式
-import 'element-plus/theme-chalk/dark/css-vars.css';
+// import 'element-plus/theme-chalk/dark/css-vars.css';
+// import '@/assets/styles/dark/css-vars.css'
 
 
 import {createApp} from 'vue'

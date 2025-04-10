@@ -36,8 +36,8 @@ export const request = async <T = any>(config: SikaRequestConfig): Promise<R<T>>
     return {
       code: 500,
       message: '请求失败',
-      result: {} as T}
-      ;
+      result: {} as T
+    }
   } finally {
   }
 };

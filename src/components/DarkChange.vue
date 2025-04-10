@@ -1,5 +1,5 @@
 <template>
-  <ElSwitch
+  <el-switch
     v-model="isDark"
     style="
       --el-switch-off-color: #2c2c2c;
@@ -19,7 +19,7 @@
         <Sunny/>
       </el-icon>
     </template>
-  </ElSwitch>
+  </el-switch>
 </template>
 
 <script setup lang="ts">

@@ -1,12 +1,12 @@
 <template>
-  <ElTooltip
+  <el-tooltip
     :content="sideBarStore.tips"
     :placement="sideBarStore.location"
   >
     <div class="img-container" @click="sideBarStore.toggleSideBar">
       <img :src="sidebarImg" alt="" />
     </div>
-  </ElTooltip>
+  </el-tooltip>
 </template>
 
 <script setup lang="ts">
