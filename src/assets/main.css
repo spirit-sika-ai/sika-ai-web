@@ -9,7 +9,7 @@ ul > li {
 
 /* 让 Element Plus 组件适配暗黑模式 */
 .dark {
-    --el-bg-color: #141414;
+    --el-bg-color: #8b8b8b;
     --el-text-color-primary: #ffffff;
     background-color: #141414;
     color: white;

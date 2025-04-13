@@ -8,9 +8,11 @@
         ElAside
       </el-aside>
     </Transition>
-    <el-main>
-      <RouterView/>
-    </el-main>
+    <Transition>
+      <el-main>
+        <RouterView/>
+      </el-main>
+    </Transition>
   </el-container>
 </template>
 

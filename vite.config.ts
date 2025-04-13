@@ -28,5 +28,15 @@ export default defineConfig({
     preprocessorOptions: {
       scss: { api: 'modern-compiler' },
     }
+  },
+  server: {
+    proxy: {
+      '/api': {
+        // target: 'http://139.159.236.189:8080/sika-ai-service/',
+        target: 'http://localhost:8080/',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '')
+      }
+    }
   }
 })

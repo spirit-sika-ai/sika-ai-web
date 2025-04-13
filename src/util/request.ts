@@ -41,3 +41,20 @@ export const request = async <T = any>(config: SikaRequestConfig): Promise<R<T>>
   } finally {
   }
 };
+
+export const SERVER_PREFIX = 'sika-ai-service';
+export const get = <T = any>(url: string, data?: unknown) => {
+  return request<T>({
+    url: `${url}`,
+    method: 'GET',
+    params: data
+  })
+}
+
+export const post = <T = any>(url: string, data?: unknown) => {
+  return request<T>({
+    url: `${url}`,
+    method: 'POST',
+    data: data
+  })
+}
