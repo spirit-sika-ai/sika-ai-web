@@ -11,15 +11,20 @@
         <div class="flex-wrapper">
           <slot name="left">
             <div class="left-area">
-              <SikaButton is-switch>think</SikaButton>
-              <SikaButton>search</SikaButton>
+              <el-button type="primary" plain>think</el-button>
+              <el-button type="primary" plain>search</el-button>
             </div>
           </slot>
           <slot name="right">
             <div class="right-area">
-              <SikaButton>
-              </SikaButton>
-              <SikaButton :disabled="true">send</SikaButton>
+              <el-button
+                type="success"
+                plain
+                :disabled="disabledSend"
+                @click="clickSend"
+              >
+                send
+              </el-button>
             </div>
           </slot>
         </div>
@@ -29,15 +34,15 @@
 </template>
 
 <script setup lang="ts">
-import {ref, watch, useAttrs, computed, onMounted, useTemplateRef} from 'vue'
+import {ref, watch, useAttrs, computed, onMounted} from 'vue'
 import {cloneDeepExclude} from "@/util/TypeUtil.ts";
-import SikaButton from "@/components/SikaButton/SikaButton.vue";
-
-const textarea = useTemplateRef<HTMLTextAreaElement>('sika-textarea')
-const internalValue = ref<string>('')
-
-const emit = defineEmits(['update:modelValue'])
-
+import {requestStreamMessage} from "@/api/chat.ts";
+import {useMarkedHooks} from "@/hooks/useMarkedHooks.ts";
+import type {ChatResponse, R} from "@/type/BaseType.ts";
+defineOptions({
+  name: 'SikaInputArea'
+})
+const emit = defineEmits(['update:modelValue', 'show'])
 const props = defineProps({
   row: {
     type: Number,
@@ -72,17 +77,43 @@ const props = defineProps({
     default: '咨询任何问题'
   }
 })
-
 // 透传所有props并排除type
 const inputProps = {
   ...useAttrs(),
   ...cloneDeepExclude(props, ['type']),
   type: 'textarea',
 }
+const {marked} = useMarkedHooks()
+const internalValue = ref<string>('')
 
-const resizeStyle = computed(() => {
-  return props.resize ? 'both' : 'none'
-})
+const disabledSend = computed(
+  () => {
+    return internalValue.value.length === 0
+  })
+
+const clickSend = () => {
+  let reply = ''
+  requestStreamMessage(internalValue.value)
+    .then(e => {
+      e.onmessage = (messageEvent: MessageEvent) => {
+        const data = JSON.parse(messageEvent.data) as R<ChatResponse>
+        if (data.result.result.metadata.finishReason === "STOP") {
+          e.close()
+        }
+        else {
+          const {text} = data.result.result.output
+          // TODO think标签中的内容, 每一行都需要加上>
+          if (text?.length > 0) {
+            reply += text
+            const htmlStr = marked.parse(reply)
+            console.log(htmlStr);
+            emit('show', htmlStr)
+          }
+        }
+      }
+    })
+    .catch(ElMessage.error)
+}
 
 watch(
   () => internalValue.value,
@@ -90,6 +121,10 @@ watch(
     emit('update:modelValue', newValue)
   }
 )
+
+const resizeStyle = computed(() => {
+  return props.resize ? 'both' : 'none'
+})
 
 onMounted(() => {
   // resetInputSize()

@@ -5,13 +5,14 @@
         <SikaInputArea
           v-model="mdStr"
           :f-size="size"
+          @show="showMd"
         />
       </el-form-item>
     </el-form>
     <!--md效果预览-->
-    <!--<div class="md-wrapper">
+    <div class="md-wrapper">
       <div v-html="htmlStr"></div>
-    </div>-->
+    </div>
   </div>
 </template>
 
@@ -20,7 +21,12 @@ import {ref} from 'vue'
 import {useMarkedHooks} from "@/hooks/useMarkedHooks.ts";
 import SikaInputArea from "@/components/SikaInputArea.vue";
 const size = ref<string>('18px');
-const {mdStr, htmlStr} = useMarkedHooks();
+const {mdStr} = useMarkedHooks();
+
+const htmlStr = ref<string>('')
+const showMd = (reply: string) => {
+  htmlStr.value = reply
+}
 </script>
 
 <style scoped lang="scss">

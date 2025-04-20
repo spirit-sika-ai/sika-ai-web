@@ -6,6 +6,7 @@
     @mousedown.left="handleKeyDown"
     @mouseup.left="handleKeyUp"
     @mouseleave="handleKeyUp"
+    @click="handleClick"
   >
     <slot name="icon-left"></slot>
 
@@ -16,8 +17,16 @@
 </template>
 
 <script setup lang="ts">
-import type {SikaButtonProps} from "@/components/SikaButton/SikaButton.ts";
+import type {SikaButtonProps} from "@/components/SikaButton/Button.ts";
 import {useButtonHooks} from "@/components/SikaButton/hooks/UseButtonHooks.ts";
+
+defineOptions({
+  name: 'SikaButton'
+})
+
+const emit = defineEmits({
+  click: (evt: MouseEvent) => evt instanceof MouseEvent
+})
 
 const {
   theme = 'default',
@@ -29,7 +38,6 @@ const {
   round = true,
 } = defineProps<SikaButtonProps>()
 
-// TODO: 处理disabled阻止点击事件
 const {
   active,
   computedClass,
@@ -39,7 +47,22 @@ const {
   handleKeyUp
 } = useButtonHooks(disabled)
 
-
+/**
+ * @description disabled 时阻止点击事件触发
+ * @param evt 点击事件对象
+ */
+const handleClick = (evt: MouseEvent) => {
+  if (disabled) {
+    evt.stopPropagation()
+    return
+  }
+  if (isSwitch) {
+    // 改变按钮状态
+    evt.stopPropagation()
+    return;
+  }
+  emit('click', evt)
+}
 </script>
 
 <style scoped lang="scss">

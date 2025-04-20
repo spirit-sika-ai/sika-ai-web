@@ -14,7 +14,7 @@ export const useButtonHooks = (disabled: boolean) => {
   const attrs = useAttrs()
 
   const handleKeyDown = () => {
-    active.value = true
+    active.value = !active.value
   }
   const handleKeyUp = () => {
     active.value = false

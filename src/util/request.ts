@@ -2,6 +2,7 @@ import type {AxiosRequestConfig} from 'axios';
 import axios from 'axios';
 import type {InternalAxiosRequestConfig} from 'axios';
 import type {R} from '@/type/BaseType'
+import qs from 'qs'
 
 /**
  * 默认所有接口都需要鉴权, 不需要鉴权方法request提供notAuth参数值为true即可
@@ -43,7 +44,22 @@ export const request = async <T = any>(config: SikaRequestConfig): Promise<R<T>>
 };
 
 export const SERVER_PREFIX = 'sika-ai-service';
+// 将数据转为路径参数发送
 export const get = <T = any>(url: string, data?: unknown) => {
+  if (data !== undefined) {
+    if (typeof data === 'string') {
+      return request<T>({
+        url: `${url}?${data}`,
+        method: 'GET'
+      })
+    }
+    const dataStr = qs.stringify(data)
+    return request<T>({
+      url: `${url}?${dataStr}`,
+      method: 'GET'
+    })
+  }
+
   return request<T>({
     url: `${url}`,
     method: 'GET',

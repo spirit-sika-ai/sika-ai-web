@@ -47,3 +47,35 @@ export interface User {
    */
   updateBy: string;
 }
+export interface Metadata {
+  refusal: string;
+  finishReason: string;
+  index: number;
+  id: string;
+  role: string;
+  messageType: string;
+}
+export interface Output {
+  messageType: string;
+  metadata: Metadata;
+  toolCalls: any[];
+  media: any[];
+  text: string;
+
+}
+
+export interface ResultMetadata {
+  finishReason: string;
+  contentFilters: any[];
+  empty: boolean;
+
+}
+
+export interface Result {
+  output: Output;
+  metadata: ResultMetadata;
+}
+
+export interface ChatResponse {
+  result: Result
+}
