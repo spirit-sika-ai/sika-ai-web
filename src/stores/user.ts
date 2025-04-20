@@ -1,11 +1,17 @@
 import {defineStore} from 'pinia'
-// import {computed, ref} from 'vue'
+import {ref} from 'vue'
 
 export const useUserStore = defineStore(
   'user',
   () => {
-
-    return {}
+    const userToken = ref<string>('')
+    function updateToken (token: string)  {
+      userToken.value = token
+    }
+    return {
+      userToken,
+      updateToken
+    }
   },
   {
     persist: true,

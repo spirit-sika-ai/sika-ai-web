@@ -1,9 +1,9 @@
 <template>
   <div class="login-page">
     <div class="shell">
-<!--      <div id="img-box">-->
-<!--        <img src="../assets/img/11.png" alt="">-->
-<!--      </div>-->
+      <!--      <div id="img-box">-->
+      <!--        <img src="../assets/img/11.png" alt="">-->
+      <!--      </div>-->
       <form method="post" @submit.prevent>
         <div id="form-body">
           <div id="welcome-lines">
@@ -14,16 +14,19 @@
             <div class="f-inp">
               <input type="text" placeholder="Customer Login Name" v-model="loginUser.username">
             </div>
+            <div class="f-inp" v-if="currentType === 'REGISTER'">
+              <input type="text" placeholder="Customer Nickname" v-model="loginUser.nickname">
+            </div>
             <div class="f-inp">
               <input type="password" placeholder="Customer Password" v-model="loginUser.password">
             </div>
           </div>
           <div id="submit-button-cvr">
-            <button id="submit-button" @click="handleLogin">LOGIN</button>
+            <button id="submit-button" @click="handleClick">{{ currentType }}</button>
           </div>
           <div id="forgot-register">
-            <a href="#">Forgot Password?</a>
-            <a href="/user/register">Don't have account?</a>
+            <span>Forgot Password?</span>
+            <span @click="handleTipsSwitch">{{ inOrUpTips }}</span>
           </div>
         </div>
       </form>
@@ -33,19 +36,38 @@
 
 <script setup lang="ts">
 import {useLoginHooks} from "@/hooks/useLoginHooks.ts";
+import {ref} from 'vue'
 
-const {loginUser, handleLogin} = useLoginHooks();
+const {loginUser, handleLogin, handleRegister} = useLoginHooks();
+
+const inOrUpTips = ref<'Don\'t have account?' | 'already has account!'>('Don\'t have account?')
+const currentType = ref<'LOGIN' | 'REGISTER'>('LOGIN')
+const handleClick = ref<() => void>(handleLogin)
+
+const handleTipsSwitch = () => {
+  if (currentType.value === 'LOGIN') {
+    currentType.value = 'REGISTER'
+    inOrUpTips.value = 'Don\'t have account?'
+    handleClick.value = handleRegister
+  } else {
+    currentType.value = 'LOGIN'
+    inOrUpTips.value = 'already has account!'
+    handleClick.value = handleLogin
+  }
+}
+
 </script>
 
 <style scoped lang="scss">
 .login-page {
   background: linear-gradient(45deg, #FBDA61, #FF5ACD);
-  //background: linear-gradient(to right, rgb(55, 65, 81), rgb(17, 24, 39), rgb(0, 0, 0));
+  /*background: linear-gradient(to right, rgb(55, 65, 81), rgb(17, 24, 39), rgb(0, 0, 0));*/
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
+
 .shell,
 form {
   position: relative;
@@ -152,7 +174,7 @@ form {
       text-align: center;
       margin-top: 10px;
 
-      a {
+      span {
         color: #868686;
         font-size: 12px;
         text-decoration: none;

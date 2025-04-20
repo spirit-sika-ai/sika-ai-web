@@ -11,5 +11,9 @@ type loginDto = {
   captcha?: string
 }
 export const postLogin = async (userDto: loginDto) => {
-  return post('auth', userDto)
+  return post<string>('auth', userDto)
+}
+
+export const postRegister = async (registerDto: Pick<User, 'username' | 'password'> & Partial<Pick<User, 'nickname'>>) => {
+  return post<string>('auth/register', registerDto)
 }
