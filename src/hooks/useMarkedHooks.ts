@@ -16,7 +16,7 @@ marked.use({
 marked.use(markedHighlight({
   emptyLangClass: 'hljs',
   langPrefix: 'hljs language-',
-  highlight(code, lang, info) {
+  highlight(code, lang, _) {
     const language = hljs.getLanguage(lang) ? lang : 'plaintext';
     return hljs.highlight(code, {language}).value;
   }
