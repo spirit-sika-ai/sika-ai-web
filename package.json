@@ -3,6 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "npm": "please-use-pnpm",
+    "yarn": "please-use-pnpm",
+    "node": ">=22.14.0",
+    "pnpm": ">=10.8.1"
+  },
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
@@ -17,7 +23,10 @@
     "@vueuse/core": "^12.8.2",
     "axios": "^1.8.2",
     "element-plus": "^2.9.6",
+    "highlight.js": "^11.11.1",
     "lodash": "^4.17.21",
+    "marked": "^15.0.8",
+    "marked-highlight": "^2.2.1",
     "pinia": "^3.0.1",
     "pinia-plugin-persistedstate": "^4.2.0",
     "vue": "^3.5.13",
@@ -37,7 +46,7 @@
     "typescript": "~5.8.0",
     "unplugin-auto-import": "^19.1.2",
     "unplugin-vue-components": "^28.4.1",
-    "vite": "^6.2.1",
+    "vite": "6.2.6",
     "vite-plugin-vue-devtools": "^7.7.2",
     "vitest": "^3.0.8",
     "vue-tsc": "^2.2.8"
