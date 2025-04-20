@@ -1,29 +1,40 @@
 <template>
-  <div>
+  <div class="chat-wrapper">
     <el-form>
       <el-form-item>
-        <el-input
-          type="textarea"
-          resize="none"
-          class="sika-textarea"
-          :autosize="{ minRows: 4, maxRows: 19 }"
-          :input-style="{
-            borderRadius: '25px',
-            padding: '20px',
-            backgroundColor: 'rgba(0, 0, 0, 0.4)',
-          }"
+        <SikaInputArea
+          v-model="mdStr"
+          :f-size="size"
         />
       </el-form-item>
     </el-form>
+    <!--md效果预览-->
+    <!--<div class="md-wrapper">
+      <div v-html="htmlStr"></div>
+    </div>-->
   </div>
 </template>
 
 <script setup lang="ts">
-
+import {ref} from 'vue'
+import {useMarkedHooks} from "@/hooks/useMarkedHooks.ts";
+import SikaInputArea from "@/components/SikaInputArea.vue";
+const size = ref<string>('18px');
+const {mdStr, htmlStr} = useMarkedHooks();
 </script>
 
 <style scoped lang="scss">
-.sika-textarea {
-  width: 50vw;
+/* markdown代码块圆角 */
+:deep(.hljs) {
+  border-radius: 10px !important;
+}
+
+.md-wrapper {
+  border-radius: 10px;
+}
+
+.chat-wrapper {
+  max-width: 70vw;
+  width: 70vw;
 }
 </style>

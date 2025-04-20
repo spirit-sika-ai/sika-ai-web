@@ -3,6 +3,13 @@ import './assets/main.css'
 // import 'element-plus/theme-chalk/dark/css-vars.css';
 // import '@/assets/styles/dark/css-vars.css'
 
+// md代码高亮
+// import 'highlight.js/styles/base16/darcula.css'
+// import 'highlight.js/styles/base16/apprentice.css'
+// import 'highlight.js/styles/base16/ashes.css'
+import 'highlight.js/styles/base16/atelier-cave-light.css'
+// import 'highlight.js/styles/github-dark-dimmed.css'
+
 
 import {createApp} from 'vue'
 import {createPinia} from 'pinia'
